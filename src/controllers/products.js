@@ -54,8 +54,8 @@ const products = {
       stock,
       description,
       idCategory,
-      idSeller,
-      date: new Date
+      idSeller
+      // date: new Date
     }
 
     if (req.files) {
@@ -106,8 +106,8 @@ const products = {
       stock,
       description,
       idCategory,
-      idSeller,
-      date: new Date
+      idSeller
+      // date: new Date
     }
 
     productModels.insertProduct(data)
