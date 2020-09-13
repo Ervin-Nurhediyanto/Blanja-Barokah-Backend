@@ -1,6 +1,7 @@
 const express = require('express')
 const userController = require('../controllers/users')
 const userForgot = require('../middlewares/forgot_email')
+const { upload } = require('../middlewares/multer')
 const router = express.Router()
 
 router
@@ -10,8 +11,9 @@ router
   .post('/login/custommer', userController.loginCustommer)
   .post('/forgotpassword', userForgot.forgotPass)
   .patch('/resetpassword/:id', userController.resetPassword)
-  .patch('/myProfile/:id', userController.custommerProfile)
+  .patch('/myProfile/:id', upload, userController.custommerProfile)
   .patch('/shippingAddress/:id', userController.shippingAddress)
-  .patch('/storeProfile/:id', userController.storeProfile)
+  .patch('/storeProfile/:id', upload, userController.storeProfile)
+  .get('/:id', userController.getUserById)
 
 module.exports = router

@@ -191,8 +191,14 @@ module.exports = {
       storeDescription
     }
 
+    // if (req.files) {
+    //   data.image = process.env.BASE_URL + 'uploads/' + req.files[0].filename
+    // }
+
     if (req.files) {
-      data.image = process.env.BASE_URL + 'uploads/' + req.files.filename
+      data.image = req.files.map((item) => {
+        return process.env.BASE_URL + 'uploads/' + item.filename
+      }).join()
     }
 
     modelUser.updateUser(id, data)
@@ -217,7 +223,7 @@ module.exports = {
     }
 
     if (req.files) {
-      data.image = process.env.BASE_URL + 'uploads/' + req.files.filename
+      data.image = process.env.BASE_URL + 'uploads/' + req.files[0].filename
     }
 
     modelUser.updateUser(id, data)
@@ -257,13 +263,35 @@ module.exports = {
       storeDescription
     }
 
+    // if (req.files) {
+    //   data.image = process.env.BASE_URL + 'uploads/' + req.files.filename
+    // }
+
     if (req.files) {
-      data.image = process.env.BASE_URL + 'uploads/' + req.files.filename
+      data.image = req.files.map((item) => {
+        return process.env.BASE_URL + 'uploads/' + item.filename
+      }).join()
     }
 
     modelUser.updateUser(id, data)
       .then((result) => {
         helpers.response(res, null, result, 200, null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
+  getUserById: (req, res) => {
+    const id = req.params.id
+    modelUser.getUserById(id)
+      .then((result) => {
+        console.log(result)
+        if (result != '') {
+          helpers.response(res, null, result, 200, null)
+        } else {
+          helpers.response(res, null, 'User not found', 404, 'error')
+        }
       })
       .catch((err) => {
         console.log(err)
