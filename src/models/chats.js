@@ -3,7 +3,7 @@ const connection = require('../configs/db')
 const chats = {
   getChatById: (id) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM products INNER JOIN chat ON chat.idProduct = products.id WHERE chat.id = ?', id, (err, result) => {
+      connection.query('SELECT * FROM users INNER JOIN products ON products.idSeller = users.id INNER JOIN chat ON chat.idProduct = products.id WHERE chat.id = ?', id, (err, result) => {
         if (!err) {
           resolve(result)
         } else {
@@ -18,7 +18,7 @@ const chats = {
     let pageChat = ''
 
     if (search != null) {
-        searchChat = `WHERE chat.chat LIKE '%${search}%'`
+      searchChat = `WHERE chat.chat LIKE '%${search}%'`
     }
     if (sort != null) {
       if (order != null) {
@@ -36,7 +36,7 @@ const chats = {
     }
     return new Promise((resolve, reject) => {
       if (search != null || sort != null || page != null) {
-        connection.query(`SELECT * FROM products INNER JOIN chat ON chat.idProduct = products.id ${searchChat} ${sortChat} ${pageChat}`, (err, result) => {
+        connection.query(`SELECT * FROM users INNER JOIN products ON products.idSeller = users.id INNER JOIN chat ON chat.idProduct = products.id ${searchChat} ${sortChat} ${pageChat}`, (err, result) => {
           if (!err) {
             resolve(result)
           } else {
@@ -44,7 +44,7 @@ const chats = {
           }
         })
       } else {
-        connection.query('SELECT * FROM products INNER JOIN chat ON chat.idProduct = products.id', (err, result) => {
+        connection.query('SELECT * FROM users INNER JOIN products ON products.idSeller = users.id INNER JOIN chat ON chat.idProduct = products.id', (err, result) => {
           if (!err) {
             resolve(result)
           } else {
