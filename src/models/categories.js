@@ -3,7 +3,7 @@ const connection = require('../configs/db')
 const categories = {
   getCategoryById: (id) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM category WHERE id = ?', id, (err, result) => {
+      connection.query('SELECT * FROM products INNER JOIN category ON products.idCategory = category.id WHERE category.id = ?', id, (err, result) => {
         if (!err) {
           resolve(result)
         } else {
@@ -44,7 +44,7 @@ const categories = {
           }
         })
       } else {
-        connection.query('SELECT * FROM category', (err, result) => {
+        connection.query('SELECT * FROM products INNER JOIN category ON products.idCategory = category.id', (err, result) => {
           if (!err) {
             resolve(result)
           } else {
@@ -71,14 +71,14 @@ const categories = {
       connection.query('SELECT * FROM products INNER JOIN category ON products.idCategory = category.id WHERE category.id = ?', id, (err, result) => {
         if (!err) {
           if (result != '') {
-            resolve('ID Category Sudah Digunakan')
+            resolve('ID Category Already Exists')
           } else {
             connection.query('DELETE FROM category WHERE id = ?', id, (err, result) => {
               if (!err) {
                 if (result.affectedRows != 0) {
                   resolve('Delete Category Success')
                 } else {
-                  resolve('ID Category tidak ditemukan')
+                  resolve('ID Category Not Found')
                 }
               } else {
                 reject(new Error(err))

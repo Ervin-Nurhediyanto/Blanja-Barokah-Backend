@@ -39,7 +39,7 @@ const products = {
 
   updateProduct: (req, res) => {
     const id = req.params.id
-    const { name, price, color, category, size, brand, author, rate, chat, condition, stock, description, idCategory, idSeller } = req.body
+    const { name, price, color, category, size, brand, author, rate, condition, stock, description, idCategory, idSeller } = req.body
 
     const data = {
       name,
@@ -54,7 +54,8 @@ const products = {
       stock,
       description,
       idCategory,
-      idSeller
+      idSeller,
+      date: new Date
     }
 
     if (req.files) {
@@ -105,7 +106,8 @@ const products = {
       stock,
       description,
       idCategory,
-      idSeller
+      idSeller,
+      date: new Date
     }
 
     productModels.insertProduct(data)

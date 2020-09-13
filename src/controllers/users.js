@@ -17,8 +17,7 @@ module.exports = {
       image: null,
       gender: null,
       dateOfBirth: null,
-      storeDescription: null,
-      address: null
+      storeDescription: null
     }
 
     bcrypt.genSalt(10, function (_err, salt) {
@@ -180,7 +179,7 @@ module.exports = {
 
   updateUser: (req, res) => {
     const id = req.params.id
-    const { name, email, gender, dateOfBirth, phoneNumber, storeName, storeDescription, address } = req.body
+    const { name, email, gender, dateOfBirth, phoneNumber, storeName, storeDescription } = req.body
 
     const data = {
       name,
@@ -189,8 +188,7 @@ module.exports = {
       dateOfBirth,
       phoneNumber,
       storeName,
-      storeDescription,
-      address
+      storeDescription
     }
 
     if (req.files) {
