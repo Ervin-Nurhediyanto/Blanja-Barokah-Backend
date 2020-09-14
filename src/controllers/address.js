@@ -1,65 +1,74 @@
-const chatModels = require('../models/chats')
+const addressModels = require('../models/address')
 const helpers = require('../helpers/helpers')
+const redis = require('redis')
+// const client = redis.createClient(6379)
 
-const chats = {
-  getChatById: (req, res) => {
+const address = {
+  getAddressById: (req, res) => {
     const id = req.params.id
-    chatModels.getChatById(id)
+    addressModels.getAddressById(id)
       .then((result) => {
         if (result != '') {
           helpers.response(res, null, result, 200, null)
         } else {
-          helpers.response(res, null, 'Data not found', 404, 'Error')
+          helpers.response(res, null, 'Address not found', 404, 'Error')
         }
       })
       .catch((err) => {
         console.log(err)
       })
   },
-  getAllchat: (req, res) => {
+
+  getAllAddress: (req, res) => {
     const search = req.query.search
     const sort = req.query.sort
     const order = req.query.order
     const page = req.query.page
     const limit = req.query.limit
 
-    chatModels.getAllchat(search, sort, order, page, limit)
+    addressModels.getAllAddress(search, sort, order, page, limit)
       .then((result) => {
         if (result != '') {
           helpers.response(res, page, result, 200, null)
         } else {
-          helpers.response(res, null, 'Data not found', 404, 'Error')
+          helpers.response(res, null, 'Address not found', 404, 'Error')
         }
       })
       .catch((err) => {
         console.log(err)
       })
   },
-  updateChat: (req, res) => {
+
+  updateAddress: (req, res) => {
     const id = req.params.id
-    const { chat, idProduct, idUser } = req.body
+    const { title, name, address, city, telephoneNumber, postalCode, idUser } = req.body
     const data = {
-      chat,
-      idProduct,
+      title,
+      name,
+      address,
+      city,
+      telephoneNumber,
+      postalCode,
       idUser
     }
-    chatModels.updateChat(id, data)
+    addressModels.updateAddress(id, data)
       .then((result) => {
-        const resultChats = result
+        const resultAddress = result
         console.log(result)
-        helpers.response(res, null, resultChats, 200, null)
+        helpers.response(res, null, resultAddress, 200, null)
       })
       .catch((err) => {
         console.log(err)
       })
   },
-  deleteChat: (req, res) => {
+
+  deleteAddress: (req, res) => {
     const id = req.params.id
-    chatModels.deleteChat(id)
+    addressModels.deleteAddress(id)
       .then((result) => {
-        if (result == 'ID Chat is already exsists') {
+        if (result == 'ID Address is already exsists') {
           helpers.response(res, null, result, 403, 'Forbidden')
-        } else if (result == 'ID Chat not found') {
+        } else if (result == 'ID Address not found') {
           helpers.response(res, null, result, 404, 'Not Found')
         } else {
           helpers.response(res, null, result, 200, null)
@@ -69,14 +78,19 @@ const chats = {
         console.log(err)
       })
   },
-  insertChat: (req, res) => {
-    const { chat, idProduct, idUser } = req.body
+  
+  insertAddress: (req, res) => {
+    const { title, name, address, city, telephoneNumber, postalCode, idUser } = req.body
     const data = {
-      chat,
-      idProduct,
+      title,
+      name,
+      address,
+      city,
+      telephoneNumber,
+      postalCode,
       idUser
     }
-    chatModels.insertChat(data)
+    addressModels.insertAddress(data)
       .then((result) => {
         console.log(result)
         helpers.response(res, null, result, 200, null)
@@ -87,4 +101,4 @@ const chats = {
   }
 }
 
-module.exports = chats
+module.exports = address

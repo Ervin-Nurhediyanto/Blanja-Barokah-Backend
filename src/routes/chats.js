@@ -2,7 +2,6 @@ const express = require('express')
 const chatController = require('../controllers/chats')
 const router = express.Router()
 const { verifyAccess } = require('../middlewares/auth')
-// const redis = require('../middlewares/redis')
 
 router
   .get('/:id', verifyAccess, chatController.getChatById)

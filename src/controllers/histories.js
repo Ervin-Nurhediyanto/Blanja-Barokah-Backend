@@ -43,10 +43,10 @@ const histories = {
 
   updateHistory: (req, res) => {
     const id = req.params.id
-    const { idProduct, address, countItem } = req.body
+    const { idUser, idProduct, countItem } = req.body
     const data = {
+      idUser,
       idProduct,
-      address,
       countItem
     }
     historyModels.updateHistory(id, data)
@@ -69,10 +69,10 @@ const histories = {
       })
   },
   insertHistory: (req, res) => {
-    const { idProduct, address, countItem } = req.body
+    const { idUser, idProduct, countItem } = req.body
     const data = {
+      idUser,
       idProduct,
-      address,
       countItem
     }
     historyModels.insertHistory(data)
