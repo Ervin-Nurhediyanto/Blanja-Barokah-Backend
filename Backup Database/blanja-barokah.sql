@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Sep 2020 pada 13.43
+-- Waktu pembuatan: 14 Sep 2020 pada 11.06
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.9
 
@@ -29,17 +29,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `address` (
   `id` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
-  `address` text NOT NULL
+  `title` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(64) NOT NULL,
+  `telephoneNumber` varchar(32) NOT NULL,
+  `postalCode` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `address`
 --
 
-INSERT INTO `address` (`id`, `idUser`, `address`) VALUES
-(1, 1, 'Jalan Raya Masa Depan'),
-(2, 1, 'Jalan Raya Masa Lalu');
+INSERT INTO `address` (`id`, `title`, `name`, `address`, `city`, `telephoneNumber`, `postalCode`, `idUser`) VALUES
+(1, 'Home', 'Putriar', 'Jalan Raya Jakarta', 'Jakarta Selatan', '033434236', 52362, 1);
 
 -- --------------------------------------------------------
 
@@ -81,9 +85,7 @@ CREATE TABLE `chat` (
 
 INSERT INTO `chat` (`id`, `chat`, `idProduct`, `idUser`) VALUES
 (1, 'haihai', 1, 9),
-(2, 'haiiiihaiiihello', 4, 5),
-(4, 'hello world baru', 1, 1),
-(5, 'haiiiihaiiihello', 1, 8);
+(2, 'haiiiihaiiihello', 4, 5);
 
 -- --------------------------------------------------------
 
@@ -104,7 +106,7 @@ CREATE TABLE `history` (
 --
 
 INSERT INTO `history` (`id`, `idProduct`, `idUser`, `countItem`, `date`) VALUES
-(1, 1, 1, 10, '2020-09-13 09:24:09');
+(5, 1, 9, 10, '2020-09-13 09:24:09');
 
 -- --------------------------------------------------------
 
@@ -136,11 +138,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `color`, `category`, `size`, `brand`, `author`, `rate`, `condition`, `stock`, `description`, `idCategory`, `idSeller`, `date`) VALUES
-(1, 'T-Shirt Baru ', 'http://localhost:4000/uploads/1599989736227-download.jpg,http://localhost:4000/uploads/1599989736230-jas1.jpg', 100000, 'gray, purple, blue dark', 'man', 30, 'Pull & Bear', 'Barokah Shope', 10, 'New', 10, 'Lorem ipsum', 1, 2, '2020-09-13 09:35:36'),
-(2, 'T-Shirt Long & Short 2', 'http://localhost:4000/uploads/1599826317265-img1.png, http://localhost:4000/uploads/1599826317296-img2.png, http://localhost:4000/uploads/1599826317501-img3.png, http://localhost:4000/uploads/1599826317558-img4.png, http://localhost:4000/uploads/1599826317', 70000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-13 08:19:51'),
-(3, 'T-Shirt Long & Short 3', 'http://localhost:4000/uploads/1599826323990-img1.png, http://localhost:4000/uploads/1599826324158-img2.png, http://localhost:4000/uploads/1599826324175-img3.png, http://localhost:4000/uploads/1599826324182-img4.png, http://localhost:4000/uploads/1599826324', 70000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-13 08:19:51'),
-(4, 'Produk Baru', 'https://dj7u9rvtp3yka.cloudfront.net/products/PIM-1571109987094-102c9f48-9849-4d48-aeb1-29d2cf52f001_v1-small.jpg', 1222222, 'black', 'man', 27, 'Zalora', 'Barokah-Shop', 9, 'New', 23, 'Lorem Ipsum', 2, 1, '2020-09-13 08:19:51'),
-(5, 'T-Shirt Long & Short', 'http://localhost:4000/uploads/1599989623185-download.jpg,http://localhost:4000/uploads/1599989623238-jas1.jpg', 70000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-13 09:33:43');
+(1, 'T-Shirt Red ', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT0cBnFK2fE8BZV-1hWnwMH_r5NAsAfBrWAgA&usqp=CAU', 1000000, 'gray, purple, blue dark', 'man', 30, 'Pull & Bear', 'Barokah Shope', 10, 'New', 10, 'Lorem ipsum', 1, 2, '2020-09-13 09:35:36'),
+(2, 'T-Shirt Yellow', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9uhukJG2vhnS27As6cZl8kmzNgJ99g6Q7kg&usqp=CAU', 80000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-13 08:19:51'),
+(3, 'T-Shirt Blue', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhMiKa2esQ-bAGZjcbzC29Ytb4mNTstHRpaA&usqp=CAU', 70000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-13 08:19:51'),
+(4, 'T-Shirt Gray', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRs48HHkfxrJPJbzBnwySDHTfn5PF_Vt6CNWQ&usqp=CAU', 150000, 'black', 'man', 27, 'Zalora', 'Barokah-Shop', 9, 'New', 23, 'Lorem Ipsum', 2, 1, '2020-09-13 08:19:51'),
+(5, 'T-Shirt Black', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS2mFsTVONDR3yyPs3hiyWXDlgtrhW9CULEwQ&usqp=CAU', 20000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-13 09:33:43'),
+(6, 'T-Shirt White', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS4__ssG4-FRuLtbomtYavtHWLmT_ffoAG0XQ&usqp=CAU', 40000, 'black, blue, red, pink', 'woman', 26, 'Pull & Bear', 'Barokah Shope', 10, 'New', 12, 'Lorem ipsum', 1, 1, '2020-09-14 03:09:57');
 
 -- --------------------------------------------------------
 
@@ -167,7 +170,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `roleId`, `name`, `email`, `image`, `gender`, `dateOfBirth`, `phoneNumber`, `storeName`, `storeDescription`, `password`) VALUES
-(1, 2, 'putri', 'rputria18@gmail.com', '', 0, '0000-00-00', 0, '', '', '$2a$10$W3PEfY4UqCJin2SzYfzxpu1JxItfCcMLvB2znxWS4/eW7L/gc6kHy'),
+(1, 2, 'customer', 'rputria18@gmail.com', '', 0, '0000-00-00', 0, '', '', '$2a$10$W3PEfY4UqCJin2SzYfzxpu1JxItfCcMLvB2znxWS4/eW7L/gc6kHy'),
 (2, 1, 'barokah', 'barokah@gmail.com', '', 0, '0000-00-00', 2147483647, 'Blanja-Barokah', '', '$2a$10$lsIwt5TSsrxbCDFgqcwn8.ETwzo7Af7VzY3rLVrRAKPcCoKdV4l1S');
 
 --
@@ -242,7 +245,7 @@ ALTER TABLE `history`
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
