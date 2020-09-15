@@ -38,12 +38,18 @@ const address = {
         console.log(err)
       })
   },
+
   updateAddress: (req, res) => {
     const id = req.params.id
-    const { idUser, address } = req.body
+    const { title, name, address, city, telephoneNumber, postalCode, idUser } = req.body
     const data = {
-      idUser,
-      address
+      title,
+      name,
+      address,
+      city,
+      telephoneNumber,
+      postalCode,
+      idUser
     }
     addressModels.updateAddress(id, data)
       .then((result) => {
@@ -55,6 +61,7 @@ const address = {
         console.log(err)
       })
   },
+
   deleteAddress: (req, res) => {
     const id = req.params.id
     addressModels.deleteAddress(id)
@@ -71,11 +78,17 @@ const address = {
         console.log(err)
       })
   },
+  
   insertAddress: (req, res) => {
-    const { idUser, address } = req.body
+    const { title, name, address, city, telephoneNumber, postalCode, idUser } = req.body
     const data = {
-      idUser,
-      address
+      title,
+      name,
+      address,
+      city,
+      telephoneNumber,
+      postalCode,
+      idUser
     }
     addressModels.insertAddress(data)
       .then((result) => {
