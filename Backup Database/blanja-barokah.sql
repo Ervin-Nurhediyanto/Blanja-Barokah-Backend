@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Sep 2020 pada 11.06
+-- Waktu pembuatan: 02 Okt 2020 pada 15.14
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.9
 
@@ -84,8 +84,8 @@ CREATE TABLE `chat` (
 --
 
 INSERT INTO `chat` (`id`, `chat`, `idProduct`, `idUser`) VALUES
-(1, 'haihai', 1, 9),
-(2, 'haiiiihaiiihello', 4, 5);
+(1, 'haihai', 1, 1),
+(2, 'haiiiihaiiihello', 4, 2);
 
 -- --------------------------------------------------------
 
@@ -106,7 +106,7 @@ CREATE TABLE `history` (
 --
 
 INSERT INTO `history` (`id`, `idProduct`, `idUser`, `countItem`, `date`) VALUES
-(5, 1, 9, 10, '2020-09-13 09:24:09');
+(1, 1, 2, 10, '2020-09-13 09:24:09');
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,8 @@ INSERT INTO `users` (`id`, `roleId`, `name`, `email`, `image`, `gender`, `dateOf
 -- Indeks untuk tabel `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indeks untuk tabel `category`
@@ -193,19 +194,25 @@ ALTER TABLE `category`
 -- Indeks untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProduct` (`idProduct`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indeks untuk tabel `history`
 --
 ALTER TABLE `history`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProduct` (`idProduct`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indeks untuk tabel `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCategory` (`idCategory`),
+  ADD KEY `idSeller` (`idSeller`);
 
 --
 -- Indeks untuk tabel `users`
@@ -252,6 +259,37 @@ ALTER TABLE `products`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `chat`
+--
+ALTER TABLE `chat`
+  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `history`
+--
+ALTER TABLE `history`
+  ADD CONSTRAINT `history_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`idSeller`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
