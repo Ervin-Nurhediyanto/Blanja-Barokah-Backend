@@ -263,12 +263,25 @@ module.exports = {
       storeDescription
     }
 
-    // if (req.files) {
-    //   data.image = process.env.BASE_URL + 'uploads/' + req.files.filename
-    // }
-
     if (req.files) {
       data.image = req.files.map((item) => {
+        return process.env.BASE_URL + 'uploads/' + item.filename
+      }).join()
+    }
+
+    modelUser.updateUser(id, data)
+      .then((result) => {
+        helpers.response(res, null, result, 200, null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
+  UploadImageStore: (req, res) => {
+    const id = req.params.id
+    const data = {
+      image: req.files.map((item) => {
         return process.env.BASE_URL + 'uploads/' + item.filename
       }).join()
     }

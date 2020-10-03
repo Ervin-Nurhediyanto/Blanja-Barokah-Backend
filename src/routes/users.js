@@ -14,6 +14,7 @@ router
   .patch('/myProfile/:id', upload, userController.custommerProfile)
   .patch('/shippingAddress/:id', userController.shippingAddress)
   .patch('/storeProfile/:id', upload, userController.storeProfile)
+  .patch('/uploadImageStore/:id', upload, userController.UploadImageStore)
   .get('/:id', userController.getUserById)
 
 module.exports = router
