@@ -3,7 +3,7 @@ const connection = require('../configs/db')
 module.exports = {
   login: (email) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT *, DATE_FORMAT(dateOfBirth, "%d %M %Y") AS "dateOfBirth" FROM users WHERE email = ?', email, (err, result) => {
+      connection.query('SELECT *, DATE_FORMAT(dateOfBirth, "%d %m %Y") AS "dateOfBirth" FROM users WHERE email = ?', email, (err, result) => {
         if (!err) {
           resolve(result)
         } else {
@@ -61,7 +61,7 @@ module.exports = {
 
   getUserById: (id) => {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT * FROM users WHERE id = ?', id, (err, result) => {
+      connection.query('SELECT *, DATE_FORMAT(dateOfBirth, "%d %m %Y") AS "dateOfBirth" FROM users WHERE id = ?', id, (err, result) => {
         if (!err) {
           resolve(result)
         } else {

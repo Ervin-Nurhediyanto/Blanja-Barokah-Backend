@@ -191,10 +191,6 @@ module.exports = {
       storeDescription
     }
 
-    // if (req.files) {
-    //   data.image = process.env.BASE_URL + 'uploads/' + req.files[0].filename
-    // }
-
     if (req.files) {
       data.image = req.files.map((item) => {
         return process.env.BASE_URL + 'uploads/' + item.filename
