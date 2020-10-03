@@ -24,12 +24,13 @@ const products = {
     const order = req.query.order
     const page = req.query.page
     const limit = req.query.limit
-    productModels.getAllproduct(search, sort, order, page, limit)
+    const seller = req.query.seller
+    productModels.getAllproduct(search, sort, order, page, limit, seller)
       .then((result) => {
         if (result != '') {
           helpers.response(res, page, result, 200, null)
         } else {
-          helpers.response(res, page, 'Product not found', 404, 'error')
+          helpers.response(res, page, 'Product not found', 200, 'error')
         }
       })
       .catch((err) => {

@@ -128,7 +128,6 @@ module.exports = {
             user.token = token
 
             delete user.password
-            delete user.phoneNumber
             delete user.storeName
             delete user.storeDescription
             delete user.address
