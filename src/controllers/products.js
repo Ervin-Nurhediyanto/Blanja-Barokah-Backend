@@ -10,7 +10,7 @@ const products = {
         if (result != '') {
           helpers.response(res, null, result, 200, null)
         } else {
-          helpers.response(res, null, 'Product not found', 404, 'error')
+          helpers.response(res, null, 'Product not found', 200, 'error')
         }
       })
       .catch((err) => {
@@ -56,7 +56,6 @@ const products = {
       description,
       idCategory,
       idSeller
-      // date: new Date
     }
 
     if (req.files) {
@@ -75,6 +74,7 @@ const products = {
         console.log(err)
       })
   },
+
   deleteProduct: (req, res) => {
     const id = req.params.id
     productModels.deleteProduct(id)
@@ -89,31 +89,75 @@ const products = {
         console.log(err)
       })
   },
+
   insertProduct: (req, res) => {
-    const { name, price, color, category, size, brand, author, rate, condition, stock, description, idCategory, idSeller } = req.body
+    const { name, price, color, category, size, brand, author, rate, condition, stock, description, idSeller } = req.body
+
     const data = {
       name,
-      image: req.files.map((item) => {
-        return process.env.BASE_URL + 'uploads/' + item.filename
-      }).join(),
       price,
-      color,
-      category,
-      size,
-      brand,
-      author,
       rate,
       condition,
       stock,
       description,
-      idCategory,
-      idSeller
-      // date: new Date
+      idSeller,
+      idCategory: 1
+    }
+
+    if (req.files) {
+      data.image = req.files.map((item) => {
+        return process.env.BASE_URL + 'uploads/' + item.filename
+      }).join()
+    }
+
+    if (req.body.author) {
+      data.author = {
+        author
+      }
+    }
+    if (req.body.brand) {
+      data.brand = {
+        brand
+      }
+    }
+    if (req.body.category) {
+      data.category = {
+        category
+      }
+    }
+    if (req.body.color) {
+      data.color = {
+        color
+      }
+    }
+    if (req.body.size) {
+      data.size = {
+        size
+      }
     }
 
     productModels.insertProduct(data)
       .then((result) => {
         helpers.response(res, null, result, 200, null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
+  updateImageProduct: (req, res) => {
+    const id = req.params.id
+
+    const data = {
+      image: req.files.map((item) => {
+        return process.env.BASE_URL + 'uploads/' + item.filename
+      }).join()
+    }
+
+    productModels.updateProduct(id, data)
+      .then((result) => {
+        const resultProducts = result
+        helpers.response(res, null, resultProducts, 200, null)
       })
       .catch((err) => {
         console.log(err)

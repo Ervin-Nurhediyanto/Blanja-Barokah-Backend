@@ -10,6 +10,7 @@ router
   .get('/', verifyAccess, productController.getAllproduct)
   .post('/', verifyAccessSeller, upload, productController.insertProduct)
   .patch('/:id', verifyAccessSeller, upload, productController.updateProduct)
+  .patch('/updateImage/:id', verifyAccessSeller, upload, productController.updateImageProduct)
   .delete('/:id', verifyAccessSeller, productController.deleteProduct)
 
 module.exports = router
