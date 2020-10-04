@@ -25,13 +25,14 @@ const address = {
     const order = req.query.order
     const page = req.query.page
     const limit = req.query.limit
+    const user = req.query.user
 
-    addressModels.getAllAddress(search, sort, order, page, limit)
+    addressModels.getAllAddress(search, sort, order, page, limit, user)
       .then((result) => {
         if (result != '') {
           helpers.response(res, page, result, 200, null)
         } else {
-          helpers.response(res, null, 'Address not found', 404, 'Error')
+          helpers.response(res, null, 'Address not found', 200, null)
         }
       })
       .catch((err) => {
@@ -41,15 +42,14 @@ const address = {
 
   updateAddress: (req, res) => {
     const id = req.params.id
-    const { title, name, address, city, telephoneNumber, postalCode, idUser } = req.body
+    const { title, name, address, city, telephoneNumber, postalCode } = req.body
     const data = {
       title,
       name,
       address,
       city,
       telephoneNumber,
-      postalCode,
-      idUser
+      postalCode
     }
     addressModels.updateAddress(id, data)
       .then((result) => {
@@ -78,7 +78,7 @@ const address = {
         console.log(err)
       })
   },
-  
+
   insertAddress: (req, res) => {
     const { title, name, address, city, telephoneNumber, postalCode, idUser } = req.body
     const data = {
@@ -88,11 +88,27 @@ const address = {
       city,
       telephoneNumber,
       postalCode,
-      idUser
+      idUser,
+      setAddress: 2
     }
     addressModels.insertAddress(data)
       .then((result) => {
         console.log(result)
+        helpers.response(res, null, result, 200, null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
+  setPrimaryAddress: (req, res) => {
+    const id = req.params.id
+    const { idUser } = req.body
+    const data = {
+      idUser
+    }
+    addressModels.setPrimaryAddress(id, data)
+      .then((result) => {
         helpers.response(res, null, result, 200, null)
       })
       .catch((err) => {

@@ -12,14 +12,19 @@ const address = {
       })
     })
   },
-  getAllAddress: (search, sort, order, page, limit) => {
+  getAllAddress: (search, sort, order, page, limit, user) => {
     let searchAddress = ''
     let sortAddress = ''
     let pageAddress = ''
 
-    if (search != null) {
-      searchAddress = `WHERE address.address LIKE '%${search}%'`
+    if (user) {
+      if (search) {
+        searchAddress = `WHERE address.address LIKE '%${search}%' AND address.idUser = ${user}`
+      } else {
+        searchAddress = `WHERE address.idUser = ${user}`
+      }
     }
+
     if (sort != null) {
       if (order != null) {
         sortAddress = `ORDER BY ${sort} ${order}`
@@ -27,6 +32,7 @@ const address = {
         sortAddress = `ORDER BY ${sort} ASC`
       }
     }
+
     if (page != null) {
       if (limit != null) {
         pageAddress = `LIMIT ${limit} OFFSET ${(page - 1) * limit}`
@@ -35,7 +41,7 @@ const address = {
       }
     }
     return new Promise((resolve, reject) => {
-      if (search != null || sort != null || page != null) {
+      if (search != null || sort != null || page != null || user != null) {
         connection.query(`SELECT * FROM users INNER JOIN address ON address.idUser = users.id ${searchAddress} ${sortAddress} ${pageAddress}`, (err, result) => {
           if (!err) {
             resolve(result)
@@ -98,6 +104,39 @@ const address = {
           reject(new Error(err))
         }
       })
+    })
+  },
+
+  setPrimaryAddress: (id, data) => {
+    return new Promise((resolve, reject) => {
+      connection.query('SELECT * FROM address WHERE idUser = ?', data.idUser, (err, result) => {
+        if (!err) {
+          result.map((item) => {
+            connection.query('UPDATE address SET setAddress = 2 WHERE id = ?', item.id, (err, result) => {
+              if (!err) {
+                connection.query('UPDATE address SET setAddress = 1 WHERE id = ?', id, (err, result) => {
+                  if (!err) {
+                    resolve('Set Primary Address Success')
+                  } else {
+                    reject(new Error(err))
+                  }
+                })
+              } else {
+                reject(new Error(err))
+              }
+            })
+          })
+        } else {
+          reject(new Error(err))
+        }
+      })
+      // connection.query('UPDATE address SET ? WHERE id = ?', [data, id], (err, result) => {
+      //   if (!err) {
+      //     resolve('Update Address Success')
+      //   } else {
+      //     reject(new Error(err))
+      //   }
+      // })
     })
   }
 }

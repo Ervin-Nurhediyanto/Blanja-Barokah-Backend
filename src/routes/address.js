@@ -9,6 +9,7 @@ router
   .get('/', verifyAccess, addressController.getAllAddress)
   .post('/', verifyAccess, upload, addressController.insertAddress)
   .patch('/:id', verifyAccess, upload, addressController.updateAddress)
+  .patch('/primary/:id', verifyAccess, addressController.setPrimaryAddress)
   .delete('/:id', verifyAccess, addressController.deleteAddress)
-  
+
 module.exports = router
