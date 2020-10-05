@@ -1,6 +1,6 @@
 const historyModels = require('../models/histories')
 const helpers = require('../helpers/helpers')
-const redis = require('redis')
+// const redis = require('redis')
 // const client = redis.createClient(6379)
 
 const histories = {
@@ -26,8 +26,10 @@ const histories = {
     const page = req.query.page
     const limit = req.query.limit
     const group = req.query.group
+    const user = req.query.user
+    const seller = req.query.seller
 
-    historyModels.getAllhistory(search, sort, order, page, limit, group)
+    historyModels.getAllhistory(search, sort, order, page, limit, group, user, seller)
       .then((result) => {
         if (result != '') {
           // client.setex('getallhistory', 60 * 60 * 12, JSON.stringify(result))
@@ -43,11 +45,12 @@ const histories = {
 
   updateHistory: (req, res) => {
     const id = req.params.id
-    const { idUser, idProduct, countItem } = req.body
+    const { idUser, idProduct, countItem, payment } = req.body
     const data = {
       idUser,
       idProduct,
-      countItem
+      countItem,
+      payment
     }
     historyModels.updateHistory(id, data)
       .then((result) => {
@@ -69,11 +72,12 @@ const histories = {
       })
   },
   insertHistory: (req, res) => {
-    const { idUser, idProduct, countItem } = req.body
+    const { idUser, idProduct, countItem, payment } = req.body
     const data = {
       idUser,
       idProduct,
-      countItem
+      countItem,
+      payment
     }
     historyModels.insertHistory(data)
       .then((result) => {
