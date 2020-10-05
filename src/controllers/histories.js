@@ -72,14 +72,37 @@ const histories = {
       })
   },
   insertHistory: (req, res) => {
-    const { idUser, idProduct, countItem, payment } = req.body
+    const { idUser, idSeller, idProduct, countItem, payment, addressUser, imageProduct } = req.body
     const data = {
       idUser,
+      idSeller,
       idProduct,
       countItem,
-      payment
+      payment,
+      addressUser,
+      imageProduct,
+      status: 'not yet paid'
     }
     historyModels.insertHistory(data)
+      .then((result) => {
+        console.log(result)
+        helpers.response(res, null, result, 200, null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+  transfer: (req, res) => {
+    const id = req.params.id
+
+    const data = {
+      status: 'already paid',
+      imageTransfer: req.files.map((item) => {
+        return process.env.BASE_URL + 'uploads/' + item.filename
+      }).join()
+    }
+
+    historyModels.updateHistory(id, data)
       .then((result) => {
         console.log(result)
         helpers.response(res, null, result, 200, null)
