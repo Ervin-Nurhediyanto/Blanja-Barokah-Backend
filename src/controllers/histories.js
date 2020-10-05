@@ -28,8 +28,9 @@ const histories = {
     const group = req.query.group
     const user = req.query.user
     const seller = req.query.seller
+    const status = req.query.status
 
-    historyModels.getAllhistory(search, sort, order, page, limit, group, user, seller)
+    historyModels.getAllhistory(search, sort, order, page, limit, group, user, seller, status)
       .then((result) => {
         if (result != '') {
           // client.setex('getallhistory', 60 * 60 * 12, JSON.stringify(result))
@@ -72,10 +73,11 @@ const histories = {
       })
   },
   insertHistory: (req, res) => {
-    const { idUser, idSeller, idProduct, countItem, payment, addressUser, imageProduct } = req.body
+    const { idUser, idSeller, nameProduct, idProduct, countItem, payment, addressUser, imageProduct } = req.body
     const data = {
       idUser,
       idSeller,
+      nameProduct,
       idProduct,
       countItem,
       payment,

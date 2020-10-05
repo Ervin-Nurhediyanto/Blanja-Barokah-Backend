@@ -13,7 +13,7 @@ const histories = {
     })
   },
 
-  getAllhistory: (search, sort, order, page, limit, group, user, seller) => {
+  getAllhistory: (search, sort, order, page, limit, group, user, seller, status) => {
     return new Promise((resolve, reject) => {
       let searchHistory = ''
       let sortHistory = ''
@@ -25,18 +25,27 @@ const histories = {
       const month = 'DATE_FORMAT(history.date, "%m") AS "month"'
       const year = 'DATE_FORMAT(history.date, "%Y") AS "year"'
 
-      // if (search != null) {
-      //   searchHistory = `WHERE products.name LIKE '%${search}%'`
-      // }
       if (user) {
         if (search) {
-          searchHistory = `WHERE history.idUser = ${user} AND products.name LIKE '%${search}%'`
+          if (status) {
+            searchHistory = `WHERE history.idUser = ${user} AND products.name LIKE '%${search}%' AND history.status = ${status}`
+          } else {
+            searchHistory = `WHERE history.idUser = ${user} AND products.name LIKE '%${search}%'`
+          }
+        } else if (status) {
+          searchHistory = `WHERE history.idUser = ${user} AND history.status = ${status}`
         } else {
           searchHistory = `WHERE history.idUser = ${user}`
         }
       } else if (seller) {
         if (search) {
-          searchHistory = `WHERE history.idSeller = ${seller} AND products.name LIKE '%${search}%'`
+          if (status) {
+            searchHistory = `WHERE history.idSeller = ${seller} AND products.name LIKE '%${search}%' AND history.status = ${status}`
+          } else {
+            searchHistory = `WHERE history.idSeller = ${seller} AND products.name LIKE '%${search}%'`
+          }
+        } else if (status) {
+          searchHistory = `WHERE history.idSeller = ${seller} AND history.status = ${status}`
         } else {
           searchHistory = `WHERE history.idSeller = ${seller}`
         }
