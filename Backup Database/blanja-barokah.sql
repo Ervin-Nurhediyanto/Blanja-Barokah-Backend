@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Okt 2020 pada 14.55
+-- Waktu pembuatan: 05 Okt 2020 pada 21.25
 -- Versi server: 10.4.10-MariaDB
 -- Versi PHP: 7.3.12
 
@@ -114,6 +114,7 @@ CREATE TABLE `history` (
   `idProduct` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   `idSeller` int(11) NOT NULL,
+  `nameProduct` varchar(256) NOT NULL,
   `countItem` int(11) NOT NULL,
   `imageProduct` varchar(256) NOT NULL,
   `imageTransfer` varchar(256) NOT NULL,
@@ -127,14 +128,15 @@ CREATE TABLE `history` (
 -- Dumping data untuk tabel `history`
 --
 
-INSERT INTO `history` (`id`, `idProduct`, `idUser`, `idSeller`, `countItem`, `imageProduct`, `imageTransfer`, `addressUser`, `date`, `payment`, `status`) VALUES
-(1, 10, 4, 3, 3, '', '', '', '2020-09-11 12:26:03', 'Gopay', 'not yet paid'),
-(3, 11, 4, 3, 1, '', '', '', '2020-09-11 12:26:49', 'Post Indonesia', 'packed'),
-(4, 12, 4, 7, 2, '', '', '', '2020-09-11 12:26:49', 'Mastercard', 'send'),
-(5, 12, 4, 7, 2, '', '', '', '2020-09-11 12:26:49', 'Mastercard', 'completed'),
-(6, 11, 4, 3, 1, '', '', '', '2020-09-11 12:26:49', 'Post Indonesia', 'order cancel'),
-(11, 12, 4, 7, 1, 'http://localhost:4000/uploads/1601772446195-Glasses.jpg', '', '1', '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
-(12, 11, 4, 3, 2, 'http://localhost:4000/uploads/1601771363270-Backbag-Black.jpg', '', '1', '2020-10-05 12:20:31', 'Gopay', 'not yet paid');
+INSERT INTO `history` (`id`, `idProduct`, `idUser`, `idSeller`, `nameProduct`, `countItem`, `imageProduct`, `imageTransfer`, `addressUser`, `date`, `payment`, `status`) VALUES
+(1, 10, 4, 3, '', 3, '', '', '', '2020-09-11 12:26:03', 'Gopay', 'not yet paid'),
+(3, 11, 4, 3, '', 1, '', '', '', '2020-09-11 12:26:49', 'Post Indonesia', 'packed'),
+(4, 12, 4, 7, '', 2, '', '', '', '2020-09-11 12:26:49', 'Mastercard', 'send'),
+(5, 12, 4, 7, '', 2, '', '', '', '2020-09-11 12:26:49', 'Mastercard', 'completed'),
+(6, 11, 4, 3, '', 1, '', '', '', '2020-09-11 12:26:49', 'Post Indonesia', 'order cancel'),
+(11, 12, 4, 7, '', 1, 'http://localhost:4000/uploads/1601772446195-Glasses.jpg', '', '1', '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
+(12, 11, 4, 3, '', 2, 'http://localhost:4000/uploads/1601771363270-Backbag-Black.jpg', '', '1', '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
+(13, 6, 4, 7, 'T-Shirt Grey', 2, 'http://localhost:4000/uploads/1599967572468-t-shirt grey.jpg', '', '5', '2020-10-05 15:34:07', 'Mastercard', 'not yet paid');
 
 -- --------------------------------------------------------
 
@@ -278,7 +280,7 @@ ALTER TABLE `chat`
 -- AUTO_INCREMENT untuk tabel `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
