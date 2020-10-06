@@ -10,7 +10,6 @@ This application use JWT to authentication and authorization.
 ## Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Postman](https://www.getpostman.com/) for testing
-* [Database](./Backup Database/blanja-barokah.sql)
 
 ## Project setup
 
@@ -19,8 +18,6 @@ npm install
 ```
 
 ### Install nodemon
-
-Nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
 
 If you have already installed, skip this step.
 
