@@ -25,7 +25,13 @@ const products = {
     const page = req.query.page
     const limit = req.query.limit
     const seller = req.query.seller
-    productModels.getAllproduct(search, sort, order, page, limit, seller)
+    // Filter
+    const color = req.query.color
+    const size = req.query.size
+    const category = req.query.category
+    const brand = req.query.brand
+    // End Filter
+    productModels.getAllproduct(search, sort, order, page, limit, seller, color, size, category, brand)
       .then((result) => {
         if (result != '') {
           helpers.response(res, page, result, 200, null)
@@ -40,7 +46,7 @@ const products = {
 
   updateProduct: (req, res) => {
     const id = req.params.id
-    const { name, price, color, category, size, brand, author, rate, condition, stock, description, idCategory, idSeller } = req.body
+    const { name, price, color, category, size, brand, condition, stock, description, idCategory, idSeller } = req.body
 
     const data = {
       name,
@@ -49,13 +55,9 @@ const products = {
       category,
       size,
       brand,
-      author,
-      rate,
       condition,
       stock,
-      description,
-      idCategory,
-      idSeller
+      description
     }
 
     if (req.files) {
