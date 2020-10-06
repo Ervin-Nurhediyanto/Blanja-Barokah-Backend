@@ -99,7 +99,11 @@ CREATE TABLE `chat` (
 
 INSERT INTO `chat` (`id`, `chat`, `idProduct`, `idUser`) VALUES
 (1, 'haihai', 1, 1),
+<<<<<<< HEAD
 (2, 'helloworld', 2, 1);
+=======
+(2, 'haiiiihaiiihello', 4, 2);
+>>>>>>> 9158adc418d1f893ffa2534ba1b1877798ae1ac5
 
 -- --------------------------------------------------------
 
