@@ -10,7 +10,7 @@ This application use JWT to authentication and authorization.
 ## Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Postman](https://www.getpostman.com/) for testing
-* [Database](Backup Database/blanja-barokah.sql)
+* [Database](./Backup Database/blanja-barokah.sql)
 
 ## Project setup
 
