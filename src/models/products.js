@@ -13,7 +13,7 @@ const products = {
     })
   },
 
-  getAllproduct: (search, sort, order, page, limit, seller) => {
+  getAllproduct: (search, sort, order, page, limit, seller, color, size, category, brand) => {
     return new Promise((resolve, reject) => {
       let searchProduct = ''
       let sortProduct = ''
@@ -29,6 +29,21 @@ const products = {
       } else if (search) {
         searchProduct = `WHERE products.name LIKE '%${search}%'`
       }
+
+      // Filter Products
+      if (color) {
+        searchProduct = `WHERE products.color = ${color}`
+      }
+      if (size) {
+        searchProduct = `WHERE products.size = ${size}`
+      }
+      if (category) {
+        searchProduct = `WHERE products.category = ${category}`
+      }
+      if (brand) {
+        searchProduct = `WHERE products.brand = ${brand}`
+      }
+      // End Filter Products
 
       if (sort != null) {
         if (order != null) {
