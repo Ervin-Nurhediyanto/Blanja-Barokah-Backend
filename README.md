@@ -57,7 +57,7 @@ npm start
 
 ## API documentation link
 
-[See Documentation] (https://documenter.getpostman.com/view/5773671/TVK5cM7E)
+[See Documentation](https://documenter.getpostman.com/view/5773671/TVK5cM7E)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
