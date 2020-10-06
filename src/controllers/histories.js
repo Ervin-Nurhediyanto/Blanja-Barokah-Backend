@@ -62,6 +62,21 @@ const histories = {
         console.log(err)
       })
   },
+  statusHistory: (req, res) => {
+    const id = req.params.id
+    const { status } = req.body
+    const data = {
+      status
+    }
+    historyModels.updateHistory(id, data)
+      .then((result) => {
+        console.log(result)
+        helpers.response(res, null, result, 200, null)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
   deleteHistory: (req, res) => {
     const id = req.params.id
     historyModels.deleteHistory(id)

@@ -13,6 +13,7 @@ router
   .post('/', verifyAccess, upload, historyController.insertHistory)
   .patch('/:id', verifyAccessSeller, upload, historyController.updateHistory)
   .patch('/transfer/:id', verifyAccess, uploadTransfer, historyController.transfer)
+  .patch('/status/:id', verifyAccess, upload, historyController.statusHistory)
   .delete('/:id', verifyAccessSeller, historyController.deleteHistory)
 
 module.exports = router
