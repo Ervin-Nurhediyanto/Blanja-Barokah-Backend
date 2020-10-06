@@ -32,16 +32,16 @@ const products = {
 
       // Filter Products
       if (color) {
-        searchProduct = `WHERE products.color = ${color}`
+        searchProduct = `WHERE products.color LIKE '%${color}%'`
       }
       if (size) {
-        searchProduct = `WHERE products.size = ${size}`
+        searchProduct = `WHERE products.size LIKE '%${size}%'`
       }
       if (category) {
-        searchProduct = `WHERE products.category = ${category}`
+        searchProduct = `WHERE products.category LIKE '%${category}%'`
       }
       if (brand) {
-        searchProduct = `WHERE products.brand = ${brand}`
+        searchProduct = `WHERE products.brand LIKE '%${brand}%'`
       }
       // End Filter Products
 
