@@ -105,7 +105,8 @@ const products = {
       idSeller,
       idCategory: 1,
       color: 'White',
-      size: 'M'
+      size: 'M',
+      category: 'All'
     }
 
     if (req.files) {
@@ -124,11 +125,11 @@ const products = {
         brand
       }
     }
-    if (req.body.category) {
-      data.category = {
-        category
-      }
-    }
+    // if (req.body.category) {
+    //   data.category = {
+    //     category
+    //   }
+    // }
     // if (req.body.color) {
     //   data.color = {
     //     color
