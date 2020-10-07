@@ -103,7 +103,9 @@ const products = {
       stock,
       description,
       idSeller,
-      idCategory: 1
+      idCategory: 1,
+      color: 'White',
+      size: 'M'
     }
 
     if (req.files) {
@@ -127,16 +129,16 @@ const products = {
         category
       }
     }
-    if (req.body.color) {
-      data.color = {
-        color
-      }
-    }
-    if (req.body.size) {
-      data.size = {
-        size
-      }
-    }
+    // if (req.body.color) {
+    //   data.color = {
+    //     color
+    //   }
+    // }
+    // if (req.body.size) {
+    //   data.size = {
+    //     size
+    //   }
+    // }
 
     productModels.insertProduct(data)
       .then((result) => {
