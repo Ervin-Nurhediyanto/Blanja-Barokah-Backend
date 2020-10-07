@@ -109,6 +109,7 @@ const address = {
     }
     addressModels.setPrimaryAddress(id, data)
       .then((result) => {
+        console.log(result)
         helpers.response(res, null, result, 200, null)
       })
       .catch((err) => {

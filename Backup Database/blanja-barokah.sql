@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Okt 2020 pada 21.25
--- Versi server: 10.4.10-MariaDB
--- Versi PHP: 7.3.12
+-- Waktu pembuatan: 07 Okt 2020 pada 02.27
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -90,18 +89,19 @@ INSERT INTO `category` (`id`, `nameCategory`) VALUES
 CREATE TABLE `chat` (
   `id` int(11) NOT NULL,
   `chat` varchar(256) NOT NULL,
-  `idProduct` int(11) NOT NULL
+  `idProduct` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `chat`
 --
 
-INSERT INTO `chat` (`id`, `chat`, `idProduct`) VALUES
-(1, 'haihai', 1),
-(2, 'haiiiihaiiihello', 4),
-(4, 'hello world baru', 1),
-(5, 'haiiiihaiiihello', 1);
+INSERT INTO `chat` (`id`, `chat`, `idProduct`, `idUser`) VALUES
+(1, 'haihai', 1, 1),
+(2, 'haiiiihaiiihello', 4, 2),
+(4, 'hello world baru', 1, 1),
+(5, 'haiiiihaiiihello', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,7 @@ CREATE TABLE `history` (
   `countItem` int(11) NOT NULL,
   `imageProduct` varchar(256) NOT NULL,
   `imageTransfer` varchar(256) NOT NULL,
-  `addressUser` varchar(256) NOT NULL,
+  `addressUser` int(11) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `payment` varchar(64) NOT NULL,
   `status` varchar(64) NOT NULL
@@ -129,14 +129,14 @@ CREATE TABLE `history` (
 --
 
 INSERT INTO `history` (`id`, `idProduct`, `idUser`, `idSeller`, `nameProduct`, `countItem`, `imageProduct`, `imageTransfer`, `addressUser`, `date`, `payment`, `status`) VALUES
-(1, 10, 4, 3, '', 3, '', '', '', '2020-09-11 12:26:03', 'Gopay', 'not yet paid'),
-(3, 11, 4, 3, '', 1, '', '', '', '2020-09-11 12:26:49', 'Post Indonesia', 'packed'),
-(4, 12, 4, 7, '', 2, '', '', '', '2020-09-11 12:26:49', 'Mastercard', 'send'),
-(5, 12, 4, 7, '', 2, '', '', '', '2020-09-11 12:26:49', 'Mastercard', 'completed'),
-(6, 11, 4, 3, '', 1, '', '', '', '2020-09-11 12:26:49', 'Post Indonesia', 'order cancel'),
-(11, 12, 4, 7, '', 1, 'http://localhost:4000/uploads/1601772446195-Glasses.jpg', '', '1', '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
-(12, 11, 4, 3, '', 2, 'http://localhost:4000/uploads/1601771363270-Backbag-Black.jpg', '', '1', '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
-(13, 6, 4, 7, 'T-Shirt Grey', 2, 'http://localhost:4000/uploads/1599967572468-t-shirt grey.jpg', '', '5', '2020-10-05 15:34:07', 'Mastercard', 'not yet paid');
+(1, 10, 4, 3, '', 3, '', '', 1, '2020-09-11 12:26:03', 'Gopay', 'not yet paid'),
+(3, 11, 4, 3, '', 1, '', '', 1, '2020-09-11 12:26:49', 'Post Indonesia', 'packed'),
+(4, 12, 4, 7, '', 2, '', '', 1, '2020-09-11 12:26:49', 'Mastercard', 'send'),
+(5, 12, 4, 7, '', 2, '', '', 1, '2020-09-11 12:26:49', 'Mastercard', 'completed'),
+(6, 11, 4, 3, '', 1, '', '', 1, '2020-09-11 12:26:49', 'Post Indonesia', 'order cancel'),
+(11, 12, 4, 7, '', 1, 'http://localhost:4000/uploads/1601772446195-Glasses.jpg', '', 1, '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
+(12, 11, 4, 3, '', 2, 'http://localhost:4000/uploads/1601771363270-Backbag-Black.jpg', '', 1, '2020-10-05 12:20:31', 'Gopay', 'not yet paid'),
+(13, 6, 4, 7, 'T-Shirt Grey', 2, 'http://localhost:4000/uploads/1599967572468-t-shirt grey.jpg', '', 5, '2020-10-05 15:34:07', 'Mastercard', 'not yet paid');
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,8 @@ INSERT INTO `users` (`id`, `roleId`, `name`, `email`, `image`, `gender`, `dateOf
 -- Indeks untuk tabel `address`
 --
 ALTER TABLE `address`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indeks untuk tabel `category`
@@ -234,19 +235,27 @@ ALTER TABLE `category`
 -- Indeks untuk tabel `chat`
 --
 ALTER TABLE `chat`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProduct` (`idProduct`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indeks untuk tabel `history`
 --
 ALTER TABLE `history`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idProduct` (`idProduct`),
+  ADD KEY `idSeller` (`idSeller`),
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `addressUser` (`addressUser`);
 
 --
 -- Indeks untuk tabel `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCategory` (`idCategory`),
+  ADD KEY `idSeller` (`idSeller`);
 
 --
 -- Indeks untuk tabel `users`
@@ -293,6 +302,39 @@ ALTER TABLE `products`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `chat`
+--
+ALTER TABLE `chat`
+  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `history`
+--
+ALTER TABLE `history`
+  ADD CONSTRAINT `history_ibfk_1` FOREIGN KEY (`idProduct`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`idSeller`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `history_ibfk_3` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `history_ibfk_4` FOREIGN KEY (`addressUser`) REFERENCES `address` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`),
+  ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`idSeller`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
